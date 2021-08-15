@@ -13,4 +13,7 @@ if [ ! -f $TAR ]; then
 fi
 tar -xf $TAR -C $CACHE
 
-echo "export PATH=${CACHE}/${NAME}:${PATH}" > ENVS
+BLENDER_PATH=${CACHE}/${NAME}
+BLENDER_BIN=${BLENDER_PATH}/blender
+echo "Installed Blender into:"
+echo "${BLENDER_PATH}"
