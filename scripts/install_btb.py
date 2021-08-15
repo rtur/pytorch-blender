@@ -7,6 +7,7 @@ Meant to be run ONCE via blender as follows
 import bpy
 import sys
 import subprocess
+import os
 from pathlib import Path
 
 THISDIR = Path(__file__).parent
@@ -21,7 +22,7 @@ def run(cmd):
         sys.exit(1)
 
 
-def install(name, upgrade=True, user=True, editable=False):
+def install(name, upgrade=False, user=False, editable=False):
     cmd = [sys.executable, '-m', 'pip', 'install']
     if upgrade:
         cmd.append('--upgrade')
@@ -33,7 +34,7 @@ def install(name, upgrade=True, user=True, editable=False):
     run(cmd)
 
 
-def bootstrap(user=True):
+def bootstrap(user=False):
     cmd = [sys.executable, '-m', 'ensurepip', '--upgrade']
     if user:
         cmd.append('--user')
@@ -46,8 +47,11 @@ def bootstrap(user=True):
 
 def main():
     print('Installing Blender dependencies. This might take a while...')
-    bootstrap(user=True)
-    install(str(THISDIR/'..'/'pkg_blender'), editable=True, user=True)
-
+    bootstrap()
+    install("ipdb")
+    install("trimesh")
+    install("pyyaml")
+    install("supershape")
+    install(os.path.join(THISDIR, "..", "pkg_blender"), editable=True)
 
 main()
